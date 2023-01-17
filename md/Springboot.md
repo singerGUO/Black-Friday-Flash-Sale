@@ -8,7 +8,7 @@ Long stock = (Long) jedisClient.eval(script, Collections.singletonList(key), Col
 
 **singletonList return immutable list with only one object**
 
-![](C:\Users\G2945\leetcode\2022 leetcode\typora-user-images\transactional.png)
+![](spring_image/transactional.png)
 
 ### @Transactional
 
@@ -128,7 +128,7 @@ public class TestServiceImpl {
 
 
 
-![image-20221220193958439](\spring image\image-20221220193958439.png)
+![image-20221220193958439](spring_image/image-20221220193958439.png)
 
 **Alien.java**
 
