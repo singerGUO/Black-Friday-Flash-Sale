@@ -128,7 +128,7 @@ public class TestServiceImpl {
 
 
 
-![image-20221220193958439](../spring image/image-20221220193958439.png)
+![image-20221220193958439](/spring image/image-20221220193958439.png)
 
 **Alien.java**
 
