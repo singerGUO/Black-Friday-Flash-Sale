@@ -8,7 +8,9 @@ Long stock = (Long) jedisClient.eval(script, Collections.singletonList(key), Col
 
 **singletonList return immutable list with only one object**
 
-![](spring_image/transactional.png)
+![](/spring_image/transactional.png)
+
+
 
 ### @Transactional
 
@@ -288,12 +290,28 @@ modelAndView.setViewName("seckill_result");
 @RequestParam("name")
 ```
 
-path variable 获取
+**path variable 获取**
 
 ```java
  @RequestMapping("/item/{seckillActivityId}")
     public String itemPage(Map<String,Object> resultMap,@PathVariable long seckillActivityId){}
 ```
+
+**跳转endpoint**
+
+```java
+ @RequestMapping("/seckill/orderQuery/{orderNo}")
+    public ModelAndView orderQuery(@PathVariable String orderNo) {
+        return modelAndView;
+    }
+    @RequestMapping("/seckill/payOrder/{orderNo}")
+    public String payOrder(@PathVariable String orderNo) throws Exception {
+        //do somthing
+        return "redirect:/seckill/orderQuery/" + orderNo;
+    }
+```
+
+
 
 ## controller 类对Service 类
 
