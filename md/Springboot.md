@@ -292,6 +292,18 @@ modelAndView.setViewName("seckill_result");
 
 **path variable 获取**
 
+In MyBatis, the result map is used to map the columns of a query result to the properties of a Java object. The result map is defined in an XML file, which is typically located in the resources directory of your project.
+
+To access the result map from the frontend, you will first need to retrieve the data from the database using a MyBatis `select` statement. The result of the query will be a list of objects that have been mapped to the properties defined in the result map.
+
+For example, if you have a `User` object with properties such as `id`, `name`, and `email`, and you have defined a result map in MyBatis that maps the columns of a `SELECT` statement to these properties, you can retrieve a list of `User` objects by executing the following MyBatis statement:
+
+```java
+<select id="getUsers" resultMap="userResultMap">
+  SELECT id, name, email FROM users
+</select>
+```
+
 ```java
  @RequestMapping("/item/{seckillActivityId}")
     public String itemPage(Map<String,Object> resultMap,@PathVariable long seckillActivityId){}
