@@ -8,7 +8,7 @@ Long stock = (Long) jedisClient.eval(script, Collections.singletonList(key), Col
 
 **singletonList return immutable list with only one object**
 
-![](/spring_image/transactional.png)
+![](spring_image/transactional.png)
 
 
 
@@ -733,4 +733,8 @@ public class PayStatusCheckListener implements RocketMQListener<MessageExt> {}
          */
         rocketMQService.sendDelayMessage("pay_check", JSON.toJSONString(order), 3);
 ```
+
+## 获取活动开始时间
+
+**前端轮询服务器的时间，减少误差并获取距离活动开始的时间差**
 
