@@ -585,20 +585,21 @@ public class RedisPreheatRunner  implements ApplicationRunner {}
 
 ## lombok 依赖
 
+With the `@Data` annotation, Lombok will generate getters, setters, toString, hashCode, and equals methods for the `Example` class.
+
 ```java
-拿lombok官网的一个例子来说:
-public class Mountain{
-    private String name;
-    private double longitude;
-    private String country;
-}    要使用这个对象,必须还要写一些getter和setter方法,可能还要写一个构造器、equals方法、或者hash方法.这些方法很冗长而且没有技术含量,我们叫它样板式代码.   lombok的主要作用是通过一些注解，消除样板式代码，像这样：
+import lombok.Data;
+
 @Data
-public class Mountain{
+public class Example {
     private String name;
-    private double longitude;
-    private String country;
+    private int age;
 }
 
+Example example = new Example();
+example.setName("John Doe");
+example.setAge(30);
+System.out.println(example);
 ```
 
 ## Rocket MQ JVM注意事项
@@ -734,7 +735,77 @@ public class PayStatusCheckListener implements RocketMQListener<MessageExt> {}
         rocketMQService.sendDelayMessage("pay_check", JSON.toJSONString(order), 3);
 ```
 
-## 获取活动开始时间
+## Sentinel 限流资源
 
-**前端轮询服务器的时间，减少误差并获取距离活动开始的时间差**
+**可以存在多个rule**
+
+```java
+ @RequestMapping("/seckills")
+    public String activityList(Map<String, Object> resultMap) {
+        try (Entry entry = SphU.entry("seckills")) {
+            List<SeckillActivity> seckillActivities = seckillActivityDao.querySeckillActivitysByStatus(1);
+            resultMap.put("seckillActivities", seckillActivities);
+            return "seckill_activity";
+        } catch (BlockException ex) {
+            log.error("查询秒杀活动的列表被限流 "+ex.toString());
+            return "wait";
+        }
+    }
+  @ResponseBody
+    @RequestMapping("hello2")
+    public String hello(){
+        String result;
+        // 资源名可使用任意有业务语义的字符串，比如方法名、接口名或其它可唯一标识的字符串。
+        try (Entry entry = SphU.entry("HelloResource")){
+            // 被保护的业务逻辑
+            result  = "Hello Sentinel";
+            return result;
+        }catch (BlockException ex) {
+            // 资源访问阻止，被限流或被降级
+            // 在此处进行相应的处理操作
+            log.error(ex.toString());
+            result = "系统繁忙稍后再试";
+            return  result;
+        }
+  @PostConstruct
+    public void seckillsFlow(){
+        //1.创建存放限流规则的集合
+        List<FlowRule> rules = new ArrayList<>();
+        //2.创建限流规则
+        FlowRule rule = new FlowRule();
+        //定义资源，表示sentinel会对那个资源生效
+        rule.setResource("seckills");
+        //定义限流规则类型,QPS类型
+        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        //定义QPS每秒通过的请求数
+        rule.setCount(1);
+
+        FlowRule rule2 = new FlowRule();
+        rule2.setGrade(RuleConstant.FLOW_GRADE_QPS);
+        rule2.setCount(2);
+        rule2.setResource("HelloResource");
+        //3.将限流规则放到集合中
+        rules.add(rule);
+        rules.add(rule2);
+        //4.加载限流规则
+        FlowRuleManager.loadRules(rules);
+    }
+```
+
+## MAVEN 内置打包
+
+```cmd
+mvn clean
+mvn package -DskipTests
+java -Xms256m -jar seckill-0.0.1-SNAPSHOT.jar
+java -Xmx1024m -jar myapplication.jar
+```
+
+进程观察和删除
+
+```
+jps
+kill - 9 <>
+
+```
 
