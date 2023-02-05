@@ -1,4 +1,4 @@
-Black friday seckill acitivity demo with 
+A Black friday seckill acitivity demo with 
 -Java Spring boot 
 -MySQL(Mybatis)
 -Redis(Distribution Lock and Cache)
