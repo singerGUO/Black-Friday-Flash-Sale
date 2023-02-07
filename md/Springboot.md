@@ -806,6 +806,5 @@ java -Xmx1024m -jar myapplication.jar
 ```
 jps
 kill - 9 <>
-
 ```
 
