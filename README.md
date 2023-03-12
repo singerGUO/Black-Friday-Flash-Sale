@@ -1,4 +1,4 @@
-A Black friday seckill acitivity demo with 
+Backend Development in Black Friday Flash Sale acitivity demo with 
 -Java Spring boot 
 -MySQL(Mybatis)
 -Redis(Distribution Lock and Cache)
