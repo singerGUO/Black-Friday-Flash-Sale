@@ -6,7 +6,7 @@ Backend Development in Black Friday Flash Sale acitivity demo with
 -Sentinel
 -Static page Generation
 
-An jar File is generated and could be ran locally with command:
+Jar File is generated and could be ran locally with command:
 java -Xmx1024m -jar myapplication.jar
 
 
