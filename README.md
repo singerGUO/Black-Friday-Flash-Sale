@@ -1,4 +1,4 @@
-A Black friday seckill acitivity demo with 
+Backend Development in Black Friday Flash Sale acitivity demo with 
 -Java Spring boot 
 -MySQL(Mybatis)
 -Redis(Distribution Lock and Cache)
@@ -6,7 +6,7 @@ A Black friday seckill acitivity demo with
 -Sentinel
 -Static page Generation
 
-An jar File is generated and could be ran locally with command:
+Jar File is generated and could be ran locally with command:
 java -Xmx1024m -jar myapplication.jar
 
 
